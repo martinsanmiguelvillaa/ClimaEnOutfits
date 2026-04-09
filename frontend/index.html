@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clima en Outfits</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- BACKGROUND -->
+  <div class="bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="brand">
+      <i class="fa-solid fa-cloud-sun"></i>
+      <span>Clima en Outfits</span>
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn active" data-view="home">
+        <i class="fa-solid fa-house"></i><span>Inicio</span>
+      </button>
+      <button class="nav-btn" data-view="register">
+        <i class="fa-solid fa-user-plus"></i><span>Registrarse</span>
+      </button>
+      <button class="nav-btn" data-view="dashboard">
+        <i class="fa-solid fa-gauge-high"></i><span>Mi Cuenta</span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ===== HOME ===== -->
+    <section id="view-home" class="view active">
+      <div class="hero">
+        <h1 class="hero-title">Tu outfit ideal,<br><span class="accent-text">según el clima</span></h1>
+        <p class="hero-sub">Ingresá tu ciudad y descubrí qué ponerte hoy</p>
+        <div class="search-bar">
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-location-dot"></i>
+            <input type="text" id="city-input" placeholder="Ej: Buenos Aires, Madrid, New York..." autocomplete="off">
+          </div>
+          <button class="btn btn-primary" id="search-btn">
+            Ver outfit <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="home-results" class="results-section hidden">
+        <div class="results-grid">
+          <div class="glass-card" id="weather-card"></div>
+          <div class="glass-card" id="outfit-card"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== REGISTER ===== -->
+    <section id="view-register" class="view">
+      <div class="container">
+        <div class="glass-card form-card">
+          <div class="card-header">
+            <div class="card-icon-wrap"><i class="fa-solid fa-user-plus"></i></div>
+            <h2>Crear cuenta</h2>
+            <p>Recibí tu outfit personalizado cada día</p>
+          </div>
+
+          <form id="register-form">
+            <fieldset>
+              <legend>Datos personales</legend>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input type="text" id="reg-name" placeholder="Juan">
+                </div>
+                <div class="form-group">
+                  <label>Apellido</label>
+                  <input type="text" id="reg-lastname" placeholder="Pérez">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Género</label>
+                <select id="reg-gender">
+                  <option value="prefiero no decirlo">Prefiero no decirlo</option>
+                  <option value="masculino">Masculino</option>
+                  <option value="femenino">Femenino</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Contacto</legend>
+              <div class="form-group">
+                <label>Email <span class="req">*</span></label>
+                <input type="email" id="reg-email" placeholder="juan@ejemplo.com" required>
+              </div>
+              <div class="form-group">
+                <label>Teléfono <span class="req">*</span></label>
+                <input type="text" id="reg-phone" placeholder="+5491112345678" required>
+              </div>
+              <div class="form-group">
+                <label>Ciudad <span class="req">*</span></label>
+                <input type="text" id="reg-city" placeholder="Buenos Aires" required>
+              </div>
+              <div class="form-group">
+                <label>Contraseña <span class="req">*</span></label>
+                <input type="password" id="reg-password" placeholder="Mínimo 8 caracteres" required minlength="8">
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Notificaciones</legend>
+              <div class="form-group">
+                <label>Canal preferido</label>
+                <select id="reg-channel">
+                  <option value="mail">Email</option>
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="both">Ambos</option>
+                </select>
+              </div>
+              <div class="toggle-row">
+                <div class="toggle-label">
+                  <span>WhatsApp opt-in</span>
+                  <small>Acepto recibir mensajes por WhatsApp</small>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" id="reg-whatsapp">
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <div class="toggle-label">
+                  <span>Notificaciones diarias</span>
+                  <small>Recibí tu outfit todos los días</small>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" id="reg-notif-enabled">
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="form-group hidden" id="reg-time-wrap">
+                <label>Hora de notificación</label>
+                <input type="time" id="reg-notif-time">
+              </div>
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary btn-full">
+              <i class="fa-solid fa-check"></i> Crear cuenta
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DASHBOARD ===== -->
+    <section id="view-dashboard" class="view">
+      <div class="container">
+
+        <!-- Login panel -->
+        <div id="dash-login" class="glass-card form-card narrow-card">
+          <div class="card-header">
+            <div class="card-icon-wrap"><i class="fa-solid fa-gauge-high"></i></div>
+            <h2>Mi Cuenta</h2>
+            <p>Ingresá tu email y contraseña para continuar</p>
+          </div>
+          <form id="login-form">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="login-email" placeholder="juan@ejemplo.com" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label>Contraseña</label>
+              <input type="password" id="login-password" placeholder="Tu contraseña" required autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+              <i class="fa-solid fa-arrow-right-to-bracket"></i> Ingresar
+            </button>
+          </form>
+        </div>
+
+        <!-- Dashboard content -->
+        <div id="dash-content" class="hidden">
+
+          <div class="glass-card" id="user-info-card"></div>
+
+          <div class="glass-card">
+            <div class="section-header">
+              <h3><i class="fa-solid fa-shirt"></i> Mi outfit de hoy</h3>
+              <button class="btn btn-primary btn-sm" id="get-outfit-btn">
+                <i class="fa-solid fa-rotate"></i> Ver
+              </button>
+            </div>
+            <div id="dash-results" class="results-grid hidden">
+              <div class="glass-card inner-card" id="dash-weather-card"></div>
+              <div class="glass-card inner-card" id="dash-outfit-card"></div>
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <div class="section-header">
+              <h3><i class="fa-solid fa-sliders"></i> Mis preferencias</h3>
+              <button class="btn btn-ghost btn-sm" id="add-pref-btn">
+                <i class="fa-solid fa-plus"></i> Agregar
+              </button>
+            </div>
+            <div id="pref-list"></div>
+            <div id="add-pref-form" class="add-pref-form hidden">
+              <input type="text" id="new-pref-input" placeholder="Ej: prefiero pantalones oscuros, nunca uso ropa de colores...">
+              <div class="btn-row">
+                <button class="btn btn-primary btn-sm" id="save-pref-btn">Guardar</button>
+                <button class="btn btn-ghost btn-sm" id="cancel-pref-btn">Cancelar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <h3><i class="fa-solid fa-bell"></i> Notificaciones</h3>
+            <div id="notif-settings"></div>
+            <div class="btn-row" style="margin-top:20px">
+              <button class="btn btn-warm btn-sm" id="send-notif-btn">
+                <i class="fa-solid fa-paper-plane"></i> Enviar ahora
+              </button>
+              <button class="btn btn-ghost btn-sm" id="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i> Salir
+              </button>
+              <button class="btn btn-danger btn-sm" id="delete-user-btn">
+                <i class="fa-solid fa-trash"></i> Eliminar cuenta
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EDIT PROFILE ===== -->
+    <section id="view-edit" class="view">
+      <div class="container">
+        <div class="glass-card form-card">
+          <div class="card-header">
+            <div class="card-icon-wrap"><i class="fa-solid fa-pen-to-square"></i></div>
+            <h2>Editar información</h2>
+            <p>Modificá tus datos personales</p>
+          </div>
+
+          <form id="edit-form">
+            <fieldset>
+              <legend>Datos personales</legend>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input type="text" id="edit-name" placeholder="Juan">
+                </div>
+                <div class="form-group">
+                  <label>Apellido</label>
+                  <input type="text" id="edit-lastname" placeholder="Pérez">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Género</label>
+                <select id="edit-gender">
+                  <option value="prefiero no decirlo">Prefiero no decirlo</option>
+                  <option value="masculino">Masculino</option>
+                  <option value="femenino">Femenino</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Contacto</legend>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="edit-email" placeholder="juan@ejemplo.com">
+              </div>
+              <div class="form-group">
+                <label>Teléfono</label>
+                <input type="text" id="edit-phone" placeholder="+5491169347892">
+              </div>
+              <div class="form-group">
+                <label>Ciudad</label>
+                <input type="text" id="edit-city" placeholder="Buenos Aires">
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Preferencias</legend>
+              <div class="toggle-row">
+                <div class="toggle-label">
+                  <span>WhatsApp opt-in</span>
+                  <small>Acepto recibir mensajes por WhatsApp</small>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" id="edit-whatsapp">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar cambios
+              </button>
+              <button type="button" class="btn btn-ghost" id="edit-back-btn">
+                <i class="fa-solid fa-arrow-left"></i> Volver
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL CONFIRMACIÓN ELIMINAR -->
+  <div id="delete-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-icon">🗑️</div>
+      <h3 class="modal-title">¿Eliminar cuenta?</h3>
+      <p class="modal-desc">Esta acción es <strong>irreversible</strong>. Se borrarán tu perfil, preferencias e historial de notificaciones.</p>
+      <div class="modal-user-info" id="modal-user-info"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="modal-cancel-btn">Cancelar</button>
+        <button class="btn btn-danger" id="modal-confirm-btn">
+          <i class="fa-solid fa-trash"></i> Sí, eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loading-overlay" class="loading-overlay hidden">
+    <div class="loader-box">
+      <div class="spinner"></div>
+      <p id="loading-msg">Cargando...</p>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
