@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import Integer, String, Text, ForeignKey, DateTime
-from datetime import datetime
+from datetime import datetime, timezone
 from app.db import Base
 
 
@@ -25,6 +25,6 @@ class WhatsAppLog(Base):
 
     sent_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=datetime.utcnow,
+        default=lambda: datetime.now(timezone.utc),
         nullable=False
     )

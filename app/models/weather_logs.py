@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import Integer, Float, ForeignKey, DateTime, String
-from datetime import datetime
+from datetime import datetime, timezone
 from app.db import Base
 from sqlalchemy.orm import relationship
 
@@ -70,7 +70,7 @@ class WeatherLog(Base):
     checked_at: Mapped[datetime] = mapped_column(
         DateTime,
         nullable=False,
-        default=datetime.utcnow
+        default=lambda: datetime.now(timezone.utc)
     )
 
     
