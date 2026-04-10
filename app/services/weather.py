@@ -2,12 +2,14 @@ import os
 import requests
 from sqlalchemy.orm import Session
 from app.models.weather_logs import WeatherLog
-from datetime import timezone, timedelta
+from datetime import timezone
+from zoneinfo import ZoneInfo
 from app.logger import get_logger
 
 log = get_logger("services.weather")
 
 OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
+LOCAL_TZ = ZoneInfo(os.getenv("TIMEZONE", "America/Argentina/Buenos_Aires"))
 
 
 def get_coordinates(city: str):
@@ -99,9 +101,7 @@ def create_weather_log(db: Session, user_id: int, city: str):
     db.commit()
     db.refresh(weather_log)
 
-    arg_tz = timezone(timedelta(hours=-3))
-
-    local_checked_at = weather_log.checked_at.replace( tzinfo=timezone.utc).astimezone(arg_tz)
+    local_checked_at = weather_log.checked_at.replace(tzinfo=timezone.utc).astimezone(LOCAL_TZ)
     return {
         "id": weather_log.id,
         "city": coords["name"],

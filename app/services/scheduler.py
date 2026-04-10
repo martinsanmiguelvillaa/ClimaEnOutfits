@@ -1,3 +1,4 @@
+import os
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from app.db import SessionLocal
@@ -8,8 +9,9 @@ from app.logger import get_logger
 
 log = get_logger("services.scheduler")
 
+TIMEZONE = os.getenv("TIMEZONE", "America/Argentina/Buenos_Aires")
 
-scheduler = BackgroundScheduler(timezone="America/Argentina/Buenos_Aires")
+scheduler = BackgroundScheduler(timezone=TIMEZONE)
 
 def remove_user_notification(user_id: int):
     if scheduler.get_job(f"user_notification_{user_id}"):
@@ -55,7 +57,7 @@ def schedule_user_notification(user: User):
     trigger = CronTrigger(
         hour=user.notification_time.hour,
         minute=user.notification_time.minute,
-        timezone="America/Argentina/Buenos_Aires"
+        timezone=TIMEZONE
     )
 
     scheduler.add_job(
